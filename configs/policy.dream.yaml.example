@@ -1,0 +1,35 @@
+# Copy to policy.dream.yaml and replace the launcher path before use.
+host: 127.0.0.1
+port: 8000
+log_dir: local-policy-logs
+start_timeout_seconds: 60
+backend:
+  name: auto
+  options:
+    vla:
+      http_timeout_seconds: 120
+models:
+  - name: dream-1
+    model_type: vla
+    # Placeholder identity for Router matching only, not a real repository revision.
+    url: https://huggingface.co/dreamlabs/dream-1
+    revision: "0000000000000000000000000000000000000000"
+    action_space: joint_position
+    action_dim: 14
+    control_hz: 30
+    max_horizon: 48
+    endpoint: http://127.0.0.1:9120
+    launcher:
+      - /ABSOLUTE/PATH/TO/WORKER/.venv/bin/python
+      - -m
+      - dream_policy_adapter.worker
+      - --port
+      - "9120"
+    backend_options:
+      adapter: dream_yam
+      robot_type: yam
+      checkpoint: dreamlabs/dream-1-beta
+      # Set true only after verifying absolute radians, joint order and 30 Hz.
+      contract_confirmed: false
+      # Set true if Dream and Client have opposite normalized gripper directions.
+      invert_grippers: false

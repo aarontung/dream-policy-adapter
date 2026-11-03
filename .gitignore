@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.env*
+credentials*
+*.log
+configs/policy.dream.yaml
+local-policy-logs/
+MANIFEST.json
+*.zip
+*.zip.sha256
