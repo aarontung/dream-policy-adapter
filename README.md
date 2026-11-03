@@ -9,12 +9,18 @@ Requires Python 3.10+, RoboColosseum Policy Server with plugin support, and a Dr
 Replace `/PATH/TO/policy-server` with your Policy Server directory, e.g. `/home/ai/colosseum-policy-server`.
 
 ```bash
-git clone git@github.com:aarontung/dream-policy-adapter.git
+git clone https://github.com/aarontung/dream-policy-adapter.git
 cd dream-policy-adapter
 uv pip install --python /PATH/TO/policy-server/.venv/bin/python .
 ```
 
-Follow the [Dream API setup guide](https://platform.dreamlabs.ai/setup-api) to install the Dream SDK and configure credentials in the same Python environment.
+Follow the [Dream API setup guide](https://platform.dreamlabs.ai/setup-api) to install the Dream SDK and configure credentials in `/home/ai/dream-env`. Install the adapter there too:
+
+```bash
+uv pip install --python /home/ai/dream-env/bin/python .
+```
+
+If your Dream environment is elsewhere, replace this path in both the command and `launcher` below.
 
 ## Policy Server configuration
 
@@ -30,7 +36,6 @@ backend:
 models:
   - name: dream-1
     model_type: vla
-    # Router matching placeholders, not a real repository or commit.
     url: https://huggingface.co/dreamlabs/dream-1
     revision: "0000000000000000000000000000000000000000"
     action_space: joint_position
@@ -39,7 +44,7 @@ models:
     max_horizon: 48
     endpoint: http://127.0.0.1:9120
     launcher:
-      - /PATH/TO/policy-server/.venv/bin/python
+      - /home/ai/dream-env/bin/python
       - -m
       - dream_policy_adapter.worker
       - --port
@@ -51,9 +56,6 @@ models:
       contract_confirmed: true
       invert_grippers: false
 ```
-
-- `launcher`: replace the Python path with your actual path.
-- `url` / `revision`: Router matching placeholders; keep them consistent with your Router configuration.
 
 ## Start
 
