@@ -14,13 +14,7 @@ cd dream-policy-adapter
 uv pip install --python /PATH/TO/policy-server/.venv/bin/python .
 ```
 
-Follow the [Dream API setup guide](https://platform.dreamlabs.ai/setup-api) to install the Dream SDK and configure credentials in `/home/ai/dream-env`. Install the adapter there too:
-
-```bash
-uv pip install --python /home/ai/dream-env/bin/python .
-```
-
-If your Dream environment is elsewhere, replace this path in both the command and `launcher` below.
+Follow the [Dream API setup guide](https://platform.dreamlabs.ai/setup-api) to install the Dream SDK and configure credentials in the same Python environment.
 
 ## Policy Server configuration
 
@@ -44,7 +38,7 @@ models:
     max_horizon: 48
     endpoint: http://127.0.0.1:9120
     launcher:
-      - /home/ai/dream-env/bin/python
+      - /PATH/TO/policy-server/.venv/bin/python
       - -m
       - dream_policy_adapter.worker
       - --port
@@ -56,6 +50,8 @@ models:
       contract_confirmed: true
       invert_grippers: false
 ```
+
+- `launcher`: replace the Python path with your actual path.
 
 ## Start
 
